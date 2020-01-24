@@ -2,7 +2,7 @@
 
 namespace Bilyiv\RequestDataBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * @author Vladyslav Bilyi <beliyvladislav@gmail.com>

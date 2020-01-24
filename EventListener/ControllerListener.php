@@ -7,7 +7,7 @@ use Bilyiv\RequestDataBundle\Events;
 use Bilyiv\RequestDataBundle\Exception\NotSupportedFormatException;
 use Bilyiv\RequestDataBundle\Mapper\MapperInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 /**
  * @author Vladyslav Bilyi <beliyvladislav@gmail.com>
@@ -37,12 +37,12 @@ class ControllerListener
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param ControllerEvent $event
      *
      * @throws NotSupportedFormatException
      * @throws \ReflectionException
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $controller = $event->getController();
         if (!\is_array($controller)) {
@@ -67,7 +67,7 @@ class ControllerListener
 
                 $request->attributes->set($parameter->getName(), $object);
 
-                $this->dispatcher->dispatch(Events::FINISH, new FinishEvent($object));
+                $this->dispatcher->dispatch(new FinishEvent($object), Events::FINISH);
 
                 break;
             }
